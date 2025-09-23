@@ -252,7 +252,12 @@ class Database:
     def get_strategy_configs(self) -> list[StrategyConfig]:
         """Get strategy configurations from mz_cluster_strategies"""
         with self.get_connection() as conn, conn.cursor() as cur:
-            sql = "SELECT * FROM mz_cluster_strategies"
+            sql = """
+             SELECT DISTINCT ON (cluster_id, strategy_type)
+                    cluster_id, strategy_type, config, updated_at
+             FROM mz_cluster_strategies
+             ORDER BY cluster_id, strategy_type, updated_at DESC
+             """
             logger.debug("Executing SQL", extra={"sql": sql, "params": None})
             try:
                 cur.execute(sql)
