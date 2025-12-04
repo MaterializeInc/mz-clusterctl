@@ -93,11 +93,8 @@ jobs:
         env:
           MATERIALIZE_URL: postgres://materialize@localhost:6875/materialize
         run: |
-          # Run unit tests
-          uv run pytest tests/ -v --tb=short -x
-
-          # Run integration tests specifically
-          uv run pytest tests/ -v --tb=short -m integration
+          # Run all tests (unit + integration)
+          uv run pytest tests/ -v --tb=short
 
       - name: Run linting and formatting checks
         run: |
