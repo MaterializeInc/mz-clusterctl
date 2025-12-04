@@ -1,7 +1,6 @@
 services:
   materialize:
     image: materialize/materialized:latest
-    command: --disable-license-key-checks
     container_name: mz-clusterctl-test
     ports:
       - "127.0.0.1:6875:6875"
